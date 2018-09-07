@@ -110,7 +110,11 @@ class HashidFieldMixin(object):
         try:
             hashid = self.encode_id(value)
         except ValueError:
-            raise ValueError(self.error_messages['invalid'] % {'value': value})
+            raise exceptions.ValidationError(
+                self.error_messages['invalid'],
+                code='invalid',
+                params={'value': value},
+            )
         return hashid.id
 
     def contribute_to_class(self, cls, name, **kwargs):
